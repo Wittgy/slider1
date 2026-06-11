@@ -1,55 +1,165 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+:root {
+    --gold: #d4a843;
+    --gold-light: #f0d080;
+    --gold-dark: #b8892e;
+    --bg-primary: #0d0d14;
+    --bg-secondary: #151520;
+    --text-primary: #f0e8d8;
+    --text-muted: rgba(240, 232, 216, 0.5);
+    --shadow-glow: rgba(212, 168, 67, 0.15);
+}
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-
 
 body {
     display: flex;
-    font-family: "Mulish", sans-serif;
+    font-family: 'Inter', sans-serif;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     margin: 0;
-    background-color: rgb(233, 233, 227);
+    background: var(--bg-primary);
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(212, 168, 67, 0.05), transparent 60%);
 }
 
 .container {
     display: flex;
-    width: 90vw;
+    width: 95vw;
+    max-width: 1400px;
+    gap: 8px;
+    padding: 20px;
 }
 
 .panel {
-    background-size: auto 100%;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     height: 80vh;
-    border-radius: 50px;
-    color: orangered;
+    border-radius: 24px;
     cursor: pointer;
     flex: 0.5;
-    margin: 10px;
     position: relative;
-    transition: flex 0.3s ease-in;
+    transition: flex 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.4s ease;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 40%, transparent 60%);
+    transition: opacity 0.5s ease;
+    opacity: 0.6;
+}
+
+.panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212, 168, 67, 0.08), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.panel:hover::after {
+    opacity: 1;
+}
+
+.panel:hover::before {
+    opacity: 0.8;
 }
 
 .panel h3 {
     position: absolute;
-    font-size: 24px;
-    bottom: 20px;
-    left: 20px;
+    font-size: 28px;
+    font-weight: 300;
+    bottom: 30px;
+    left: 30px;
     margin: 0;
     opacity: 0;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 2;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s, letter-spacing 0.5s ease;
+    transform: translateY(10px);
 }
 
 .panel.active {
     flex: 5;
+    border-radius: 28px;
+    border-color: rgba(212, 168, 67, 0.2);
 }
 
 .panel.active h3 {
     opacity: 1;
-    transition: opacity 0.5s ease-out;
+    transform: translateY(0);
+    font-weight: 500;
+    letter-spacing: 4px;
 }
-  
+
+.panel.active::before {
+    opacity: 0.8;
+}
+
+.panel:not(.active):hover {
+    flex: 0.8;
+}
+
+.panel:not(.active):hover h3 {
+    opacity: 0.6;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100vw;
+        gap: 4px;
+        padding: 10px;
+    }
+
+    .panel {
+        height: 70vh;
+        border-radius: 16px;
+    }
+
+    .panel h3 {
+        font-size: 18px;
+        bottom: 20px;
+        left: 20px;
+        letter-spacing: 1px;
+    }
+
+    .panel.active h3 {
+        letter-spacing: 2px;
+    }
+
+    .panel.active {
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .panel {
+        height: 60vh;
+        border-radius: 12px;
+    }
+
+    .panel h3 {
+        font-size: 14px;
+        bottom: 14px;
+        left: 14px;
+    }
+
+    .container {
+        gap: 3px;
+        padding: 6px;
+    }
+}
